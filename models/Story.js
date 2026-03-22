@@ -9,18 +9,19 @@ const storySchema = new mongoose.Schema({
     author: String,
     thumbnail: String,
     chapterCount: Number,
+    description: {
+        type: String,
+        default: "Đang cập nhật..."
+    },
     views: {
         type: Number,
         default: 0
     },
-    isVip: {
-        type: Boolean,
-        default: false
-    },
-    updateAt: {
-        type: Date,
-        default: Date.now
+    status: {
+        type: String,
+        enum: ["Ongoing", "Complete"],
+        default: "Ongoing"
     }
-})
+}, { timestamps: true })
 
 module.exports = mongoose.model("Story", storySchema)
