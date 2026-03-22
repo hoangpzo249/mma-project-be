@@ -19,6 +19,9 @@ const chapterSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     }
-}, { timestamps: true })
+}, { timestamps: true });
 
-module.exports = mongoose.model("Chapter", chapterSchema)
+// Indexing to optimize queries finding chapters by story and sorting by chapter number
+chapterSchema.index({ storyId: 1, chapterNumber: 1 });
+
+module.exports = mongoose.model("Chapter", chapterSchema);
