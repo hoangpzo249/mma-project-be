@@ -13,6 +13,7 @@ connectDB()
 app.use('/api/users', require('./routes/userRoutes'));
 app.use('/api/stories', require('./routes/storyRoutes'));
 app.use('/api/chapters', require('./routes/chapterRoutes'));
+app.use('/api/history', require('./routes/historyRoutes'));
 
 app.get('/', (req, res) => {
   res.send("OK CON DE");
