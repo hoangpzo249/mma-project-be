@@ -22,6 +22,10 @@ const storySchema = new mongoose.Schema({
         enum: ["Ongoing", "Complete"],
         default: "Ongoing"
     }
-}, { timestamps: true })
+}, { timestamps: true });
 
-module.exports = mongoose.model("Story", storySchema)
+// Indexing for faster queries
+storySchema.index({ slug: 1 }, { unique: true });
+storySchema.index({ views: -1 });
+
+module.exports = mongoose.model("Story", storySchema);
