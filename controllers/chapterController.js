@@ -27,6 +27,10 @@ exports.getChapterContent = async (req, res) => {
     // Since we populated storyId, we need its actual ID for latest chapter check
     const actualStoryId = chapter.storyId._id || chapter.storyId;
 
+    // Increment the view count for the story when a chapter is read
+    const Story = require('../models/Story');
+    await Story.findByIdAndUpdate(actualStoryId, { $inc: { views: 1 } });
+
     const isVipRequired = chapter.isVip; // ONLY requires VIP if flagged explicitly
 
     // Check if the chapter requires VIP access

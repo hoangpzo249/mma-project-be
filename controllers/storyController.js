@@ -39,7 +39,7 @@ exports.getRecentUpdates = async (req, res) => {
         const latestChapters = await Chapter.find({ storyId: story._id })
           .sort({ chapterNumber: -1 })
           .limit(3)
-          .select('_id chapterNumber title chapterTitle updatedAt createdAt')
+          .select('_id chapterNumber title chapterTitle updatedAt createdAt isVip')
           .lean();
         return { ...story, latestChapters };
       })
@@ -98,7 +98,11 @@ exports.searchStories = async (req, res) => {
 exports.getStoryById = async (req, res) => {
   try {
     const { id } = req.params;
-    const story = await Story.findById(id);
+    const story = await Story.findByIdAndUpdate(
+      id,
+      { $inc: { views: 1 } },
+      { new: true }
+    );
     if (!story) return res.status(404).json({ message: 'Story not found' });
     res.json(story);
   } catch (error) {
